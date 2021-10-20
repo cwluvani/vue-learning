@@ -213,4 +213,78 @@ app.component('save-button', {
 })
 
 
+// 1.4 计算属性和侦听器
+
+// 1.4.1计算属性
+
+`<div id="computed-basics">
+    <p>Has published books: </p>
+    <span>{{ publishedBooksMessage }}</span>
+</div>`
+
+Vue.createApp({
+    data() {
+        return {
+            author: {
+                name: 'John Doe',
+                books: [
+                    'Vue 2 - Advanced Guide',
+                    'Vue 3 - Basic Guide',
+                    '...'
+                ]
+            }
+        }
+    },
+    computed: {
+        publishedBooksMessage() {
+            return this?.author?.books.length > 0 ? 'YES' : 'NO'
+        }
+    }
+}).mount('#computed-basics');
+
+// 计算属性缓存 vs 方法
+
+// 计算属性是基于它们的响应依赖关系缓存的
+// 计算属性只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 author.books 还没有发生改变，
+// 多次访问 publishedBookMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+
+const app = createApp({
+    computed: {
+        now() {
+            return Date.now()
+        }
+    }
+})
+// 计算属性将不再更新，因为 Date.now () 不是响应式依赖
+
+// 计算属性的Setter
+
+const app = createApp({
+    // ...
+
+    computed: {
+        fullName: {
+            get() {
+                return this.firstName + ' ' + this.lastName;
+            },
+
+            set(newValue) {
+                const names = newValue.split(' ');
+                this.firstName = names[0];
+                this.lastName = names[names.length - 1];
+            }
+        }
+    }
+})
+
+// 1.4.2 侦听器
+// 当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
+
+// 计算属性 vs 侦听器
+
+//当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是如果你之前使用过 AngularJS。然而，通常更好的做法是使用计算属性而不是命令式的 watch 回调。细想一下这个例子：
+
+
+//1.5 Class 与 Style绑定
+
 

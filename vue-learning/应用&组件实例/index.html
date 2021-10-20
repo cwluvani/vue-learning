@@ -32,8 +32,50 @@
     <a @click="doSomething"></a>
     <a @[event]="doSomething"></a>
 
+    <!-- -------------------------------- -->
+    <!-- watch 侦听器 -->
+    <div id="watch-example">
+        <p>
+            Ask a yes/no question:
+            <input v-model="question" />
+        </p>
+        <p>{{ answer }}</p>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
     <script src="./vue.js"></script>
+    <script>
+        const watchExampleVM = Vue.createApp({
+            data() {
+                return {
+                    question: '',
+                    answer: 'Questions usually contain a question mark. ;-)'
+                }
+            },
+            watch: {
+                // whenever question changes, this function will run
+                question(newQuestion, oldQuestion) {
+                    if (newQuestion.includes("?")) {
+                        this.getAnswer();
+                    }
+                }
+            },
+            methods: {
+                getAnswer() {
+                    this.answer = 'Thinking...';
+                    axios
+                        .get('https://yesno.wtf/api')
+                        .then(reponse => {
+                            this.answer = reponse.data.answer
+                        })
+                        .catch(err => {
+                            this.answer = 'Error! could not reach the API ' + err
+                        })
+                }
+            }
+        }).mount('#watch-example');
+    </script>
 </body>
 </html>
