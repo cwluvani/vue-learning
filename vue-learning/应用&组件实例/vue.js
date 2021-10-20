@@ -243,6 +243,8 @@ Vue.createApp({
 }).mount('#computed-basics');
 
 // 计算属性缓存 vs 方法
+// when you need to change the presentation of existing data, you will use the computed properties
+// when you need to change data, you will use methods
 
 // 计算属性是基于它们的响应依赖关系缓存的
 // 计算属性只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 author.books 还没有发生改变，
@@ -287,4 +289,81 @@ const app = createApp({
 
 //1.5 Class 与 Style绑定
 
+// 我们总是需要操作元素的class列表和内联样式来进行*数据绑定*，vue 关注数据
 
+// 1.5.1绑定HTML Class
+
+// 对象语法
+`<div :classObject></div>
+
+data() {
+    return {
+        classObject: {
+            active: true,
+            'text-danger': false
+        }
+    }
+}`
+
+// 我们也可以在这里绑定一个返回对象的计算属性。这是一个常用且强大的模式：
+`<div :class="classObject"></div>
+
+data() {
+    return {
+        isActive: true,
+        error: null
+    }
+},
+computed: {
+    classObject() {
+        return {
+            active: this.isActive && !this.error,
+            'text-danger': this.error && this.error.type === 'fatal'
+        }
+    }
+}`
+
+//数组语法
+`<div :class="[activeClass, errClass]"></div>
+
+data() {
+    return {
+        activeClass: 'active',
+        errorClass: 'text-danger'
+    }
+}`
+
+// 在组件上使用
+`<div id="app">
+    <my-component class="baz"></my-component>
+</div>
+
+const app = Vue.createApp({});
+
+app.component('my-component', {
+    template: `
+    '<p :class="$attr.class">Hi!</p>'
+    '<span>This is a child component</span>'`
+})`
+
+
+//绑定内联样式
+
+`<div :style="{color: activeColor, fontSize: fontSize + 'px' }"></div>
+
+data() {
+    return {
+        activeColor: 'red',
+        fontSize: 30
+    }
+}`// 直接绑定一个styleObject也可以
+
+//数组语法
+//:style 的数组语法可以将多个样式对象应用到同一个元素上：
+
+//多重值
+// 可以为 style 绑定中的 property 提供一个包含多个值的数组，常用于提供多个带前缀的值，例如：
+`<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>`
+
+
+// 1.6条件渲染
