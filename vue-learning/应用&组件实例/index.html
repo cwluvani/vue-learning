@@ -7,9 +7,33 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- mustache -->
+    <span v-once>Message: {{ msg }}</span>
+    <!-- v-html -->
+    <p>Using mustache: {{ rawHtml }}</p>
+    <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+    <!-- Attribute -->
+    <div v-bind:id="dynamicId"></div>
+    <!-- 布尔值略有不同 -->
+    <button v-bind:disabled="isButtonDisabled">Button</button>
+    <!-- truthy 保持一致， falsy attribute被忽略 -->
 
+    <!-- Vue 为 v-bind 和 v-on 这两个最常用的指令，提供了特定简写： -->
+    <!-- 完整语法 -->
+    <a v-bind:href="url"> ... </a>
+
+    <!-- 缩写 -->
+    <a :href="url"> ... </a>
+
+    <!-- 动态参数的缩写 -->
+    <a :[key]="url"> ... </a>
+
+    <!-- v-on 缩写 -->
+    <a @click="doSomething"></a>
+    <a @[event]="doSomething"></a>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
     <script src="./vue.js"></script>
 </body>
 </html>
