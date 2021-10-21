@@ -367,3 +367,116 @@ data() {
 
 
 // 1.6条件渲染
+
+/** 在 <template> 元素上使用 v-if 条件渲染分组
+ * 此时可以把一个 <template> 元素当做不可见的包裹元素，并在上面使用 v-if。
+ * 最终的渲染结果将不包含 <template> 元素。
+ */ 
+
+/**
+ * 
+ * 你可以使用 v-else 指令来表示 v-if 的“else 块”：
+ * v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面，否则它将不会被识别。
+ * 
+ * v-else-if
+ * v-else-if，顾名思义，充当 v-if 的“else-if 块”，并且可以连续使用：
+ */
+
+// v-show==>seems like v-if
+// 带有v-show 的元素始终会被渲染并保留在DOM中，v-show 只是简单地切换元素的 CSS property display。
+// tips:v-show 不支持 <template> 元素，也不支持 v-else。
+
+/**
+ * v-if  vs   v-show
+ * 
+ * v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+ * 相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+ * 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。
+ * 因此，如果需要非常频繁地切换，则使用 v-show 较好；
+ * 如果在运行时条件很少改变，则使用 v-if 较好。
+ */
+
+
+//1.7 列表渲染
+// use item in items 形式的特殊语法
+
+Vue.createApp({
+    data() {
+        return {
+            items: [
+                {
+                    message: 'Foo'
+                },
+                {
+                    message: 'Bar'
+                }
+            ]
+        }
+    }
+}).mount('#array-rendering')
+
+// v-for 可以访问父作用域的property
+
+Vue.createApp({
+    data() {
+        return {
+            parentMessage: 'Parent',
+            items: [{ message: 'foo' }, { message: 'bar' }]
+        }
+    }
+}).mount('#array-with-index')
+
+// 在 v-for 里使用对象
+Vue.createApp({
+    data() {
+        return {
+            myObject: {
+                title: 'How to do lists in Vue',
+                author: 'Jane Doe',
+                publishAt: '2016-04-10' 
+            }
+        }
+    }
+}).mount('#v-for-object')
+
+// 维护状态
+
+/**
+ * 如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序，
+ * 而是就地更新每个元素，并且确保它们在每个索引位置正确渲染。
+ * 只适用于不依赖子组件状态或临时 DOM 状态 (例如：表单输入值) 的列表渲染输出。
+ * 
+ * 为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，
+ * 你需要为每项提供一个唯一 key attribute：
+ */
+
+// 数组更新检测
+// 变更方法
+/**
+ * push()
+ * pop()
+ * shift()
+ * unshift()
+ * splice()
+ * sort()
+ * reverse()
+ * 
+ * 对前面例子的 items 数组尝试调用变更方法。
+ * 比如 example1.items.push({ message: 'Baz' })。
+ */
+
+// 替换数组
+/**
+ * 有非变更方法，例如 filter()、concat() 和 slice()。它们不会变更原始数组，而总是返回一个新数组。
+ * 当使用非变更方法时，可以用新数组替换旧数组：
+ * 
+ * example1.items = example1.items.filter(item => item.message.match(/Foo/))
+ */
+
+//显示过滤排序后的结果
+
+// 计算属性、方法
+
+
+
+

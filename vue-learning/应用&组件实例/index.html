@@ -42,6 +42,25 @@
         <p>{{ answer }}</p>
     </div>
 
+    <!-- 条件渲染 -->
+    <h1 v-if="awesome">Vue is awesome!</h1>
+    <h1 v-else>Oh no</h1>
+    <!-- template -->
+    <template v-if="ok">
+        <h1>Title</h1>
+        <p>Para1</p>
+        <p>Para2</p>
+    </template>
+
+    <!-- ----列表渲染------ -->
+    <ul id="array-rendering">
+        <li v-for="item in items">
+            {{ item.message }}
+        </li>
+    </ul>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script src="https://unpkg.com/lodash@4.17.20/lodash.min.js"></script>
