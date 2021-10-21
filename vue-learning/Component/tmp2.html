@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="blog-posts-event-demo">
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post
+                v-for="post in posts"
+                :key="post.id"
+                :title="post.title"
+                @enlargeFont="onEnlargeText"
+            ></blog-post>
+        </div>
+    </div>
+
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+
+        const App = {
+            data() {
+                return {
+                    posts: [
+                        { id: 1, title: One }
+                    ],
+                    postFontSize: 1
+                }
+            },
+            methods: {
+                onEnlargeText(enlargeAmount) {
+                    this.postFontSize += enlargeAmount;
+                }
+            },
+        }
+        const app = Vue.createApp(App);
+
+        app.component('blog-post', {
+            props: ['title'],
+            emits: ['enlargeFont'], 
+
+            data() {
+                return {
+                    enlargeAmount: 0.1
+                }
+            },
+
+            template: `
+            <div class="blog-post">
+                <h4>{{ title }}</h4>
+                <button @click="$emit('enlargeFont', enlargeAmount)"> Enlarge text </button>
+            </div>
+            `
+        })
+
+        app.mount('#blog-posts-events-demo')
+
+    </script>
+</body>
+</html>

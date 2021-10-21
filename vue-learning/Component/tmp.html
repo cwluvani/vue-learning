@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 为了能在模板中使用，这些组件必须先注册以便 Vue 能够识别。-->
+    <!-- 这里有两种组件的注册类型：全局注册和局部注册 -->
+
+    <div id="blog-posts-demo">
+        <blog-post
+            v-for="post in posts"
+            :key="post.id"
+            :title="post.title"
+        ></blog-post>
+    </div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+        // Prop
+
+        const App = {
+            data() {
+                return {
+                    posts: [
+                        { id: 1, title: 'One' },
+                        { id: 2, title: 'Two' },
+                        { id: 3, title: 'Three' }
+                    ]
+                }
+            }
+        }
+
+        const app = Vue.createApp(App)
+
+        app.component('blog-post', {
+            props: ['title'],
+
+            template: `
+                <h4> {{ title }} </h4>
+            `
+        })
+        app.mount('#blog-posts-demo');
+
+    </script>
+</body>
+</html>
