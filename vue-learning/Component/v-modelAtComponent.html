@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- remember! 下面两者相等-->
+    <input v-model="searchText" />
+    <input :value="searchText" @input="searchText = $event.target.value" />
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+        // 组件实现v-model---01
+
+//          为了让它正常工作，这个组件内的 <input> 必须：
+
+//          将其 value attribute 绑定到一个名叫 modelValue 的 prop 上
+//          在其 input 事件被触发时，将新的值通过自定义的 update:modelValue 事件抛出
+
+
+       /** app.component('custom-input', {
+            props: ['modelValue'],
+            emits: ['update:modelValue'],
+            template: `
+                <input
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
+                >
+            `
+        })*/
+
+        //组件实现v-model----02
+        // use computed property to define getter & setter
+
+        const app = Vue.createApp({});
+
+        app.component('custom-input', {
+            props: ['modelValue'],
+            emits: ['update:modelValue'],
+
+            template: `
+                <input v-model="value" />
+            `,
+
+            computed: {
+                value: {
+                    get() {
+                        return this.modelValue
+                    },
+                    set(value) {
+                        this.$emit('update:modelVlalue', value)
+                    }
+                }
+            }
+        })
+
+
+    </script>
+</body>
+</html>
