@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+        // 单向数据流   父 affect 子
+        // 不应该在一个子组件内部改变prop
+
+        const app = Vue.createApp({})
+
+        app.component('my-component', {
+            props: {
+                
+                // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+                propA: Number,
+                // 多个可能的类型
+                propB: [String, Number],
+                // 必填的字符串
+                propC: {
+                    type: String,
+                    required: true
+                },
+                // 带有默认值的数字
+                propD: {
+                    type: Number,
+                    default: 100
+                },
+                // 带有默认值的对象
+                propE: {
+                    type: Object,
+                    // 对象或数组默认值必须从一个工厂函数获取
+                    default() {
+                        return { message: 'hello' }
+                    }
+                },
+                // 自定义验证函数
+                propF: {
+                    validator(value) {
+                        // 这个值必须匹配下列字符串中的一个
+                        return ['success', 'warning', 'danger'].includes(value)
+                    }
+                },
+                // 具有默认值的函数
+                propG: {
+                    type: Function,
+                    // 与对象或数组默认值不同，这不是一个工厂函数 —— 这是一个用作默认值的函数
+                    default() {
+                        return 'Default function'
+                    }
+                }
+            } // tips: prop will verify before the component instance create,
+                // so the properties of instance (like data、computed...)can't be used at default or validator function
+        })
+
+        // 类型检查==> type可以是我们自定义的构造函数，并且通过instanceof 来检查确认
+
+
+
+        /**
+         * 对应的我们有非prop的attribute
+         * 传向一个组件，该组件并没有props或者emits定义的attribute
+         * 常见的示例包括 class、style 和 id 属性。
+         * 
+        */
+
+        
+        
+
+        
+    </script>
+</body>
+</html>
