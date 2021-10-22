@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 和 HTML 元素一样，我们经常需要向一个组件传递内容 -->
+    <alert-box>
+        Something bad happened.
+    </alert-box>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            },
+
+            computed: {
+
+            }
+        })
+
+        app.component('alert-box', {
+            template: `
+                <div class="demo-alert-box"> 
+                    <strong> Error! </strong>
+                    <slot></slot>        
+                </div>
+            `
+            //<slot> tag can easily become a placeholder
+        })
+
+        app.mount("#")
+    </script>
+</body>
+</html>
