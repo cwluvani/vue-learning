@@ -72,6 +72,21 @@
          * 
         */
 
+        /***
+         * 禁用attribute
+         * 
+         * 组件选项：inheritAttrs: false
+         * 然后我们可以访问组件的 $attr property
+         * v-bind="$attr"   (object type====> it contains all of father scope binding and pass it to inner component)
+         * 
+         */
+
+         /**
+          * 与单个根节点组件不同，具有多个根节点的组件不具有自动 attribute fallthrough (隐式贯穿) 行为。
+          * 如果未显式绑定 $attrs，将发出运行时警告。
+          * 
+          * 
+         */
         
         
 
