@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 如果要将 todo-items 的长度直接传递给 TodoListStatistics，
+        我们要将 prop 逐级传递下去：TodoList -> TodoListFooter -> TodoListStatistics。
+        通过 provide/inject 方法，我们可以直接执行以下操作： -->
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({});
+        app.component('todo-list', {
+            data() {
+                return {
+                    todos: ['Feed a cat', 'Buy tickets']
+                }
+            },
+            provide: {
+                user: 'John Doe'
+            },
+            template: `
+                <div>
+                    {{ todos.length }}
+                </div>
+            `
+        })
+
+        app.component('todo-list-statistics', {
+            inject: ['user'],
+            created() {
+                console.log(`Inject property: ${this.user}`) // > 注入 property: John Doe
+            }
+        })
+
+        // 但是，如果我们尝试在此处 provide 一些组件的实例 property，这将是不起作用的：
+        /** provide: {
+                todoLength: this.todos.length // 将会导致错误 `Cannot read property 'length' of undefined`
+            },
+        */
+
+        //要访问组件实例 property，我们需要将 provide 转换为返回对象的函数
+
+        app.component('todo-list-2', {
+            data() {
+                return {
+                    todos: [1, 2, 3]
+                }
+            },
+
+            provide() {
+                return {
+                    todoLength: this.todos.length
+                }
+            }
+        })
+
+        // 父组件不需要知道哪些子组件使用它 provide 的 property
+        //子组件不需要知道 inject 的 property 来自哪里
+
+        // #处理响应性
+        /**
+         * 我们可以通过传递一个 ref property 或 reactive 对象给 provide 来改变这种行为。
+         * 在我们的例子中，如果我们想对祖先组件中的更改做出响应，
+         * 我们需要为 provide 的 todoLength 分配一个组合式 API computed property：
+         */
+
+         app.component('todo-list', {
+        // ...
+            provide() {
+                return {
+                    todoLength: Vue.computed(() => this.todos.length)
+                }
+            }
+        })
+
+        app.component('todo-list-statistics', {
+            inject: ['todoLength'],
+            created() {
+                console.log(`Injected property: ${this.todoLength.value}`) // > Injected property: 5
+            }
+        })
+
+    </script>
+</body>
+</html>
