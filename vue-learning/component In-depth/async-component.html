@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+        const {createApp, defineAsyncComponent} = Vue;
+        const app = createApp({})
+        const AsyncComp = defineAsyncComponent( 
+            () => 
+                new Promise((resolve, reject) => {
+                    resolve( {
+                        template: `<div> </div>`
+                    })
+                })
+        )
+
+        app.component('async-example', AsyncComp)
+
+        /**
+         * 你也可以在工厂函数中返回一个 Promise，
+         * 把 webpack 2 和 ES2015 语法相结合后，
+         * 我们就可以这样使用动态地导入：
+         * 
+        */
+        import { defineAsyncComponent } from 'vue'
+
+        const AsyncComp = defineAsyncComponent(() =>
+            import('./components/AsyncComponent.vue')
+        )
+
+        app.component('async-component', AsyncComp)
+
+
+        // 当在局部注册组件时，你也可以使用 defineAsyncComponent
+
+        import { createApp, defineAsyncComponent } from 'vue'
+
+        createApp({
+        // ...
+        components: {
+            AsyncComponent: defineAsyncComponent(() =>
+            import('./components/AsyncComponent.vue')
+            )
+        }
+        })
+
+        // 可以与Suspense 一起使用
+        // 异步组件在默认情况下是可挂起的。这意味着如果它在父链中有一个 <Suspense>，
+        // 它将被视为该 <Suspense> 的异步依赖。在这种情况下，
+        // 加载状态将由 <Suspense> 控制，组件自身的加载、错误、延迟和超时选项都将被忽略。
+
+        // 异步组件可以选择退出 Suspense 控制，
+        // 并可以在其选项中指定 suspensible:false，让组件始终控制自己的加载状态。
+    </script>
+</body>
+</html>
