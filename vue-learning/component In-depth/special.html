@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 必须手动强制更新，那么你可以使用 $forceUpdate。 -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+        // 在 Vue 中渲染纯 HTML 元素的速度非常快，但有时你可能有一个包含很多静态内容的组件。
+        // 在这些情况下，可以通过向根元素添加 v-once 指令来确保只对其求值一次，然后进行缓存，如下所示：
+        const app = Vue.createApp({})
+
+        app.component('term-of-service', {
+            template: `
+                <div v-once>
+                    <h1> Terms of Service </h1>
+                </div>
+            `
+        })
+
+    </script>
+</body>
+</html>
