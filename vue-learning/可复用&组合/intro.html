@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.20/dist/vue.global.js"></script>
+    <script>
+// src/components/UserRepositories.vue
+// 这是一个大型组件的示例，其中逻辑关注点按颜色进行分组。
+
+// 这种碎片化使得理解和维护复杂组件变得困难。选项的分离掩盖了潜在的逻辑问题。此外，在处理单个逻辑关注点时，我们必须不断地“跳转”相关代码的选项块。
+
+// 如果能够将同一个逻辑关注点相关代码收集在一起会更好。而这正是组合式 API 使我们能够做到的
+        export default {
+            components: {
+                RepositoriesFilters,
+                RepositoriesSortBy,
+                RepositoriesList
+            },
+            props: {
+                type: String,
+                required: true
+            },
+            data() {
+                return {
+                    repositories: [];
+                    filters: {},
+                    searchQuery: ''
+                }
+            },
+            computed: {
+                filteredRepositories() {
+
+                },
+                repositoriesMatchingSearchQuery() {
+
+                }
+            },
+            watch: {
+                user: 'getUserRepositories'
+            },
+            methods: {
+                getUserRepositories() {
+
+                },
+                updateFilters() {
+
+                }
+            },
+            mounted() {
+                this.getUserRepositories()
+            }
+        }
+
+    </script>
+</body>
+</html>
