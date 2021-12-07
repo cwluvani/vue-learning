@@ -1,20 +1,20 @@
 <template>
     <div id="app">
-        <a name="hello-world" href="#hello-world"></a>
+        <anchored-heading :level="1">
+            <h2>I wanna be alive</h2>
+        </anchored-heading>
     </div>
 </template>
 
 <script>
+import AnchoredHeading from './components/AnchoredHeading.vue'
+// import { h } from 'vue'
 
 export default {
     name: app,
-    setup() {
-
-
-
-        return {
-
-        }
-    }
+    components: {
+        AnchoredHeading
+    },
+    
 }
 </script>
